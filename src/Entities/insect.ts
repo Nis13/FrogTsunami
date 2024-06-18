@@ -1,13 +1,15 @@
 import { VELOCITY } from "../constants/constants";
 import { Player } from "./player";
-export class Car {
+export class Insect {
+    ctx:CanvasRenderingContext2D;
     x_position: number;
     y_position: number;
     width: number;
     height: number;
     img: HTMLImageElement;
   
-    constructor(x_position: number, y_position: number, width: number, height: number) {
+    constructor(ctx: CanvasRenderingContext2D,x_position: number, y_position: number, width: number, height: number) {
+      this.ctx = ctx;
       this.x_position = x_position;
       this.y_position = y_position;
       this.width = width;
@@ -17,9 +19,9 @@ export class Car {
       this.img.src = "../../car.png";
     }
   
-    draw(ctx: CanvasRenderingContext2D) {
-    //   this.ctx.fillRect(this.x_position, this.y_position, this.width, this.height);
-    ctx.drawImage(this.img,this.x_position, this.y_position, this.width, this.height);
+    draw() {
+      this.ctx.fillRect(this.x_position, this.y_position, this.width, this.height);
+    // this.ctx.drawImage(this.img,this.x_position, this.y_position, this.width, this.height);
     }
   
     detectCollision(player: Player): boolean {
@@ -32,6 +34,7 @@ export class Car {
     }
   
     update() {
+        this.draw();
         this.x_position -= VELOCITY.x;
     }
   }

@@ -12,7 +12,7 @@ export const VELOCITY = {
     y: 70,
 };
 
-export const PLATFORM_MIN_WIDTH = 100;
+export const PLATFORM_MIN_WIDTH = 400;
 export const PLATFORM_MAX_WIDTH = 1000;
 
 export const PLATFORM_FIRST_XPOSITION = -50;
