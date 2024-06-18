@@ -1,13 +1,11 @@
+// import { Obstacles } from './../Entities/car';
 import { Platform } from '../Entities/Platform';
-import { Car } from '../Entities/obstacles';
 import {
   PLATFORM_FIRST_XPOSITION,
   PLATFORM_FIRST_WIDTH,
   PLATFORM_GAP,
   PLATFORM_HEIGHT,
   PLATFORM_YPOSITION,
-  CAR_HEIGHT,
-  CAR_WIDTH,
 } from '../constants/constants';
 
 export let platforms: Platform[] = [];
@@ -51,25 +49,4 @@ export const removePlatform = () => {
     platforms.shift();
   }
 };
-export const cars: Car[] = [];
 
-export function generateCar() {
-  if (platforms.length <=1) return;
-  platforms.forEach((platform)=>{
-    const carX = platform.x + platform.width/2;
-    const carY = platform.y -CAR_HEIGHT; 
-    const car = new Car(carX, carY, CAR_WIDTH, CAR_HEIGHT);
-    if (platforms[0] == platform) return;
-    cars.push(car);
-  })
-  // const platform = platforms[Math.floor(Math.random() * platforms.length)];
-}
-
-
-export function removeCar() {
-  for (let i = cars.length - 1; i >= 0; i--) {
-    if (cars[i].x_position + cars[i].width < 0) {
-      cars.splice(i, 1);
-    }
-  }
-}

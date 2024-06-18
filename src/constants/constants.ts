@@ -24,3 +24,7 @@ export const PLATFORM_GAP =130;
 export const CAR_YPOSITION = PLATFORM_YPOSITION - 30;
 export const CAR_HEIGHT = 60;
 export const CAR_WIDTH = 100;
+
+export const BOMB_YPOSITION = PLATFORM_YPOSITION - 30;
+export const BOMB_HEIGHT = 80;
+export const BOMB_WIDTH = 120;

@@ -16,12 +16,12 @@ export class Insect {
       this.height = height;
       
       this.img = new Image();
-      this.img.src = "../../car.png";
+      this.img.src = "../../butterfly.png";
     }
   
     draw() {
-      this.ctx.fillRect(this.x_position, this.y_position, this.width, this.height);
-    // this.ctx.drawImage(this.img,this.x_position, this.y_position, this.width, this.height);
+    //   this.ctx.fillRect(this.x_position, this.y_position, this.width, this.height);
+        this.ctx.drawImage(this.img,this.x_position, this.y_position, this.width, this.height);
     }
   
     detectCollision(player: Player): boolean {
