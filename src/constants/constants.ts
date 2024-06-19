@@ -8,7 +8,7 @@ export const FROG_FULLIMAGE_HEIGHT =267;
 
 
 export const VELOCITY = {
-    x: 3,
+    x: 10,
     y: 70,
 };
 
@@ -28,3 +28,6 @@ export const CAR_WIDTH = 100;
 export const BOMB_YPOSITION = PLATFORM_YPOSITION - 30;
 export const BOMB_HEIGHT = 80;
 export const BOMB_WIDTH = 120;
+
+export const BUTTERFLY_HEIGHT = 80;
+export const BUTTERFLY_WIDTH = 120;

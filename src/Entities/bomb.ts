@@ -6,10 +6,12 @@ import { Player } from './player';
 
 export class Bomb extends Obstacle {
     img: HTMLImageElement;
+    type: string;
   constructor(x: number, y: number, width: number, height: number) {
-    super(x, y, width, height);
+    super(x, y, width, height, 'bomb');
     this.img = new Image();
     this.img.src = '../../bomb.png';
+    this.type = 'bomb';
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -29,5 +31,8 @@ export class Bomb extends Obstacle {
       this.y < player.y + player.height &&
       this.y + this.height > player.y
     );
+  }
+  handleCollision(player:Player){
+    console.log('do this when collides with bomb');
   }
 }

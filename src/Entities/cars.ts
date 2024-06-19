@@ -6,10 +6,12 @@ import { Player } from './player';
 
 export class Car extends Obstacle {
     img: HTMLImageElement;
+    type:string;
   constructor(x: number, y: number, width: number, height: number) {
-    super(x, y, width, height);
+    super(x, y, width, height,'car');
     this.img = new Image();
     this.img.src = "../../car.png";
+    this.type = 'car';
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -31,5 +33,9 @@ export class Car extends Obstacle {
       this.y < player.y + player.height &&
       this.y + this.height > player.y
     );
+  }
+
+  handleCollision(player:Player){
+    console.log('do this when collides with car');
   }
 }

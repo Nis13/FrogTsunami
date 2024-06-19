@@ -42,11 +42,16 @@ export function generatePlatform() {
     PLATFORM_HEIGHT
   );
   platforms.push(platform);
+  
+
 }
 
 export const removePlatform = () => {
-  if (platforms.length >= 10) {
+  if (platforms.length >= 5) {
     platforms.shift();
   }
 };
 
+// export function removePlatform() {
+//   platforms = platforms.filter(platform => platform.x + platform.width > 0);
+// }

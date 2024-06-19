@@ -10,6 +10,9 @@ import { initialPlatform, platforms, generatePlatform, removePlatform } from './
 import {Background} from './Entities/background';
 import { generateObstacles, updateObstacles, drawObstacles, checkObstacleCollision } from './managers/obstaclesManager';
 
+import { Coin } from './Entities/coins';
+
+
 
 const game: Game = {
   gameFrame: 0,
@@ -25,8 +28,10 @@ frogSprite.src = './frog-sheet.png';
 const background = new Background(canvas, 0, 0, ctx);
 const player = new Player(game);
 
+const coin = new Coin(ctx,50,50,50,50);
 
 initialPlatform();
+
 
 
 
@@ -44,22 +49,29 @@ function gameLoop() {
     if (platform.x + platform.width < 0) {
       generatePlatform();
     }
+    
   });
   removePlatform();
   
-  
+  coin.draw();
+  coin.update();
   generateObstacles();
   updateObstacles();
   drawObstacles(ctx);
 
+
   checkObstacleCollision(player);
  
 
+  // drawButterflies(ctx);
+  // updateButterflies();
+  // removeButterflies();
+  // checkButterflyCollision(player);
+
+
+ 
   player.update(platforms);
   player.draw(ctx, frogSprite);
-
-
-
 
   requestAnimationFrame(gameLoop);
 }
