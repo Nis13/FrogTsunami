@@ -4,29 +4,49 @@ import { VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
 import { Player } from './player';
 
+const powerTypeObj = {
+  1: 'shield',
+  2:'magnet',
+  3:'speed',
+  4:'jump boost'
+}
+
 export class Power extends Obstacle {
   img:HTMLImageElement
     type:string;
-    powerType:number;
-  constructor(x: number, y: number, width: number, height: number,powerType:number) {
+    powerTypeNum:number;
+    powerType:string | null;
+
+  constructor(x: number, y: number, width: number, height: number,powerTypeNum:number) {
     super(x, y, width, height, 'power');
-    this.powerType = powerType;
+    this.powerTypeNum = powerTypeNum;
     this.img = new Image;
     this.type = 'power';
-    
-    // this.img.src = "../../magnet.png";
-
-    
-  }
+    this.powerType = null;
+}
+  /* 
+  powerType:
+  1: shield
+  2:magnet
+  3: speed
+  4: jump boost
+  */
 
   draw(ctx: CanvasRenderingContext2D) {
-    if (this.powerType == 1){
+    if (this.powerTypeNum == 1){
+      this.powerType = 'shield';
       this.img.src = "../../shield.png";
     }
-    else if (this.powerType == 2){
+    else if (this.powerTypeNum == 2){
+      this.powerType = 'magnet';
       this.img.src = "../../magnet.png";
     }
-    else if (this.powerType == 3){
+    else if (this.powerTypeNum == 3){
+      this.powerType = 'speed';
+      this.img.src = "../../speed.png";
+    }
+    else if (this.powerTypeNum == 4){
+      this.powerType = 'jump boost';
       this.img.src = "../../speed.png";
     }
    
@@ -34,15 +54,12 @@ export class Power extends Obstacle {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   };
   
-  // In case the image source is changed after onload event
   if (this.img.complete) {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
-    // ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
   }
 
   update() {
-    // Implement car update logic
     this.x -= VELOCITY.x;
   }
 
@@ -56,5 +73,25 @@ export class Power extends Obstacle {
   }
   handleCollision(player:Player){
     console.log('do this when collides with powerup');
+    player.hasPower = this.powerType;
+      switch (player.hasPower){
+          case 'shield':
+            console.log('got shield');
+            
+            break;
+          case 'magnet':
+            console.log('got magnet');
+            break;
+          case 'speed':
+            console.log('got speed boost');
+            break;
+          case 'jump boost':
+            console.log('jump boost');
+            break;
+          default:
+            break;
+  
+      }
+    return true;
   }
 }

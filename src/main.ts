@@ -1,40 +1,36 @@
-import { Game } from './Entities/types';
-import { Player } from './Entities/player';
+import { Game } from "./Entities/types";
+import { Player } from "./Entities/player";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, VELOCITY } from "./constants/constants";
+import { setupCanvas } from "./utilis/canvasSetup";
 import {
-  CANVAS_HEIGHT,
-  CANVAS_WIDTH,
-  VELOCITY
-} from './constants/constants';
-import { setupCanvas } from './utilis/canvasSetup';
-import { initialPlatform, platforms, generatePlatform, removePlatform } from './managers/platformManager';
-import {Background} from './Entities/background';
-import { generateObstacles, updateObstacles, drawObstacles, checkObstacleCollision } from './managers/obstaclesManager';
-
-import { Coin } from './Entities/coins';
-
-
+  initialPlatform,
+  platforms,
+  generatePlatform,
+  removePlatform,
+} from "./managers/platformManager";
+import { Background } from "./Entities/background";
+import {
+  generateObstacles,
+  updateObstacles,
+  drawObstacles,
+  checkObstacleCollision,
+} from "./managers/obstaclesManager";
 
 const game: Game = {
   gameFrame: 0,
   gravity: 0.8,
-  groundHeight: 80
+  groundHeight: 80,
 };
 
-const { canvas, ctx } = setupCanvas('canvas1', CANVAS_WIDTH, CANVAS_HEIGHT);
+const { canvas, ctx } = setupCanvas("canvas1", CANVAS_WIDTH, CANVAS_HEIGHT);
 
 const frogSprite = new Image();
-frogSprite.src = './frog-sheet.png';
+frogSprite.src = "./frog-sheet.png";
 
 const background = new Background(canvas, 0, 0, ctx);
 const player = new Player(game);
 
-const coin = new Coin(ctx,50,50,50,50);
-
 initialPlatform();
-
-
-
-
 
 function gameLoop() {
   game.gameFrame++;
@@ -49,29 +45,17 @@ function gameLoop() {
     if (platform.x + platform.width < 0) {
       generatePlatform();
     }
-    
   });
   removePlatform();
-  
-  coin.draw();
-  coin.update();
+
   generateObstacles();
   updateObstacles();
   drawObstacles(ctx);
-
-
   checkObstacleCollision(player);
- 
 
-  // drawButterflies(ctx);
-  // updateButterflies();
-  // removeButterflies();
-  // checkButterflyCollision(player);
-
-
- 
   player.update(platforms);
   player.draw(ctx, frogSprite);
+  player.drawFrogs(ctx, frogSprite);
 
   requestAnimationFrame(gameLoop);
 }

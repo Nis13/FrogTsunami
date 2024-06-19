@@ -1,12 +1,11 @@
-// import { Obstacles } from './../Entities/car';
-import { Platform } from '../Entities/Platform';
+import { Platform } from "../Entities/Platform";
 import {
   PLATFORM_FIRST_XPOSITION,
   PLATFORM_FIRST_WIDTH,
   PLATFORM_GAP,
   PLATFORM_HEIGHT,
   PLATFORM_YPOSITION,
-} from '../constants/constants';
+} from "../constants/constants";
 
 export let platforms: Platform[] = [];
 
@@ -30,20 +29,16 @@ export const initialPlatform = () => {
     PLATFORM_HEIGHT,
     PLATFORM_FIRST_WIDTH
   );
-  platforms.push(platform1,platform2,platform3);
+  platforms.push(platform1, platform2, platform3);
 };
 
 export function generatePlatform() {
   const lastPlatform = platforms[platforms.length - 1];
-  const platformX = lastPlatform ? lastPlatform.x + lastPlatform.width + PLATFORM_GAP : 10;
-  let platform = new Platform(
-    platformX,
-    PLATFORM_YPOSITION,
-    PLATFORM_HEIGHT
-  );
+  const platformX = lastPlatform
+    ? lastPlatform.x + lastPlatform.width + PLATFORM_GAP
+    : 10;
+  let platform = new Platform(platformX, PLATFORM_YPOSITION, PLATFORM_HEIGHT);
   platforms.push(platform);
-  
-
 }
 
 export const removePlatform = () => {
@@ -51,7 +46,3 @@ export const removePlatform = () => {
     platforms.shift();
   }
 };
-
-// export function removePlatform() {
-//   platforms = platforms.filter(platform => platform.x + platform.width > 0);
-// }

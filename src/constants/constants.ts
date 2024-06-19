@@ -8,7 +8,7 @@ export const FROG_FULLIMAGE_HEIGHT =267;
 
 
 export const VELOCITY = {
-    x: 10,
+    x: 6,
     y: 70,
 };
 

@@ -21,6 +21,9 @@ export class Player {
   jumpDuration: number;
   spacePressed: boolean;
   spaceReleasedTimeout: number | null;
+  life: number;
+
+  hasPower:string|null;
 
   constructor(game: Game) {
     this.x = 0;
@@ -42,7 +45,10 @@ export class Player {
     this.spacePressed = false;
     this.spaceReleasedTimeout = null;
 
-    // Add event listeners for keydown and keyup
+
+    this.life = 1;
+    // this.frogcount = 1;
+    this.hasPower = null;
     document.addEventListener('keydown', (event: KeyboardEvent) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event: KeyboardEvent) => this.handleKeyUp(event));
   }
@@ -51,8 +57,6 @@ export class Player {
     if (this.x < this.targetX) {
       this.x += this.speedX;
     }
-
-    // Apply gravity when not on ground
     if (this.x >= this.targetX) {
       this.y += this.speedY;
     }
@@ -121,6 +125,36 @@ export class Player {
     if (this.isOnGround) {
       this.speedY = -this.jumpHeight;
       this.isOnGround = false;
+    }
+  }
+
+  increaseFrogCount() {
+    this.life += 1;
+    console.log(`Frog count increased to ${this.life}`);
+  }
+  decreaseFrogCount(){
+    if (this.life >1){
+      this.life -= 1;
+    }
+    
+    console.log(`Frog count decreased to ${this.life}`);
+  }
+
+  drawFrogs(ctx: CanvasRenderingContext2D, frogSprite: HTMLImageElement) {
+    for (let i = 0; i < this.life; i++) {
+      const frogX = this.x - i * (this.width); 
+      const frogY = this.y; 
+      ctx.drawImage(
+        frogSprite,
+        this.spriteWidth * this.frameX,
+        this.spriteHeight * this.frameY,
+        this.spriteWidth,
+        this.spriteHeight,
+        frogX,
+        frogY,
+        this.spriteWidth,
+        this.spriteHeight
+      );
     }
   }
 

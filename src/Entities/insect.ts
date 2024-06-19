@@ -13,10 +13,6 @@ export const butterflyCoordinates = [
     { x: 720, y: 240 }
   ];
 export class Insect extends Obstacle {
-    // x_position: number;
-    // y_position: number;
-    // width: number;
-    // height: number;
     img: HTMLImageElement;
     frameIndex: number;
     type: string;
@@ -30,22 +26,16 @@ export class Insect extends Obstacle {
     }
   
     draw(ctx:CanvasRenderingContext2D) {
-        // Ensure frameIndex stays within the range of available coordinates
         if (this.frameIndex >= butterflyCoordinates.length) {
             this.frameIndex = 0;
         }
-        
-        // Get the current frame's coordinates
         const butterfly = butterflyCoordinates[this.frameIndex];
     
-        // Draw the image using the current frame's coordinates
         ctx.drawImage(
             this.img,
             butterfly.x, butterfly.y, 240, 240,  
             this.x, this.y, this.width, this.height 
         );
-    
-        // Increment frameIndex for the next draw call
         this.frameIndex++;
     }
     
@@ -66,6 +56,9 @@ export class Insect extends Obstacle {
     }
     handleCollision(player: Player){
         console.log('handle collsion with insect');
+        player.increaseFrogCount();
+        return true;
+        
     }
   }
 

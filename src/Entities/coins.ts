@@ -35,24 +35,16 @@ export class Coin {
         this.frameIndex = 0;
 
   }
-
-  // Example method to draw/render the coin, replace with your rendering logic
   draw() {
     if (this.frameIndex >= coinPattern.length) {
       this.frameIndex = 0;
   }
-  
-  // Get the current frame's coordinates
   const coin = coinPattern[this.frameIndex];
-
-  // Draw the image using the current frame's coordinates
   this.ctx.drawImage(
       this.img,
       coin.x, coin.y, 240, 240,  
       this.x, this.y, this.width, this.height 
   );
-
-  // Increment frameIndex for the next draw call
   this.frameIndex++;
   }
 

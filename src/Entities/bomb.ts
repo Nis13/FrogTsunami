@@ -1,5 +1,3 @@
-// Entities/bomb.ts
-
 import { VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
 import { Player } from './player';
@@ -15,8 +13,6 @@ export class Bomb extends Obstacle {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    // ctx.fillStyle = 'black'; 
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
   }
 
@@ -34,5 +30,7 @@ export class Bomb extends Obstacle {
   }
   handleCollision(player:Player){
     console.log('do this when collides with bomb');
+    player.decreaseFrogCount();
+    return true;
   }
 }

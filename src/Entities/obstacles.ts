@@ -18,7 +18,6 @@ export class Car {
     }
   
     draw(ctx: CanvasRenderingContext2D) {
-    //   this.ctx.fillRect(this.x_position, this.y_position, this.width, this.height);
     ctx.drawImage(this.img,this.x_position, this.y_position, this.width, this.height);
     }
   

@@ -1,4 +1,4 @@
-import { platforms } from './../managers/platformManager';
+// import { platforms } from './../managers/platformManager';
 import { Player } from "./player";
 export abstract class Obstacle {
     x: number;
@@ -15,9 +15,8 @@ export abstract class Obstacle {
       this.type = type;
     }
   
-    // Abstract methods to be implemented by subclasses
     abstract draw(ctx: CanvasRenderingContext2D): void;
     abstract update(): void;
     abstract detectCollision(player: Player): boolean;
-    abstract handleCollision(player:Player):void;
+    abstract handleCollision(player:Player):boolean;
   }

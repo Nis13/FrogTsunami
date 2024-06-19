@@ -1,5 +1,3 @@
-// Entities/car.ts
-
 import { VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
 import { Player } from './player';
@@ -15,18 +13,14 @@ export class Car extends Obstacle {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    // Implement car drawing logic
     ctx.drawImage(this.img,this.x,this.y, this.width, this.height )
   }
 
   update() {
-    // Implement car update logic
     this.x -= VELOCITY.x;
   }
 
   detectCollision(player: Player): boolean {
-    // Implement collision detection with player
-    // Example collision detection logic (bounding box collision)
     return (
       this.x < player.x + player.width &&
       this.x + this.width > player.x &&
@@ -37,5 +31,7 @@ export class Car extends Obstacle {
 
   handleCollision(player:Player){
     console.log('do this when collides with car');
+    player.decreaseFrogCount();
+    return true;
   }
 }
