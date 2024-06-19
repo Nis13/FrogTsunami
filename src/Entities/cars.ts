@@ -1,4 +1,4 @@
-import { VELOCITY } from "../constants/constants";
+import { CANVAS_WIDTH, VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
 import { Player } from './player';
 
@@ -17,7 +17,13 @@ export class Car extends Obstacle {
   }
 
   update() {
-    this.x -= VELOCITY.x;
+    if (this.x > 400){
+      this.x -= VELOCITY.x;
+    }
+    else{
+      this.x -= VELOCITY.x+ 2;
+    }
+    
   }
 
   detectCollision(player: Player): boolean {

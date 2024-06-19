@@ -53,11 +53,16 @@ function gameLoop() {
   drawObstacles(ctx);
   checkObstacleCollision(player);
 
+
   player.update(platforms);
   player.draw(ctx, frogSprite);
   player.drawFrogs(ctx, frogSprite);
 
+
+
   requestAnimationFrame(gameLoop);
 }
+
+
 
 gameLoop();

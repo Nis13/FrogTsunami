@@ -4,26 +4,28 @@ import { VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
 import { Player } from './player';
 
-const powerTypeObj = {
-  1: 'shield',
-  2:'magnet',
-  3:'speed',
-  4:'jump boost'
-}
+const powerTypeObj = ['shield','magnet','speed','jump boost'];
+
 
 export class Power extends Obstacle {
   img:HTMLImageElement
     type:string;
     powerTypeNum:number;
-    powerType:string | null;
+    powerType:string ;
+    powerUpEndTime:number;
 
   constructor(x: number, y: number, width: number, height: number,powerTypeNum:number) {
     super(x, y, width, height, 'power');
     this.powerTypeNum = powerTypeNum;
     this.img = new Image;
     this.type = 'power';
-    this.powerType = null;
-}
+    this.powerType = powerTypeObj[powerTypeNum];
+    this.powerUpEndTime = 0;
+    
+    // this.img.src = "../../magnet.png";
+
+    
+  }
   /* 
   powerType:
   1: shield
@@ -47,19 +49,22 @@ export class Power extends Obstacle {
     }
     else if (this.powerTypeNum == 4){
       this.powerType = 'jump boost';
-      this.img.src = "../../speed.png";
+      this.img.src = "../../shoes.png";
     }
    
     this.img.onload = () => {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   };
   
+  // In case the image source is changed after onload event
   if (this.img.complete) {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
+    // ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
   }
 
   update() {
+    // Implement car update logic
     this.x -= VELOCITY.x;
   }
 
@@ -73,25 +78,34 @@ export class Power extends Obstacle {
   }
   handleCollision(player:Player){
     console.log('do this when collides with powerup');
-    player.hasPower = this.powerType;
-      switch (player.hasPower){
-          case 'shield':
-            console.log('got shield');
+    if (!player.hasPower){
+      player.hasPower = this.powerType;
+      player.handlePowerUp(this.powerType);
+    }
+   
+    
+  //     switch (player.hasPower){
+  //         case 'shield':
+  //           // this.powerUpEndTime = Date.now() + 1000;
             
-            break;
-          case 'magnet':
-            console.log('got magnet');
-            break;
-          case 'speed':
-            console.log('got speed boost');
-            break;
-          case 'jump boost':
-            console.log('jump boost');
-            break;
-          default:
-            break;
+  //           console.log('got shield');
+  //           // VELOCITY.x =10;
+  //           break;
+  //         case 'magnet':
+  //           console.log('got magnet');
+  //           break;
+  //         case 'speed':
+  //           console.log('got speed boost');
+  //           break;
+  //         case 'jump boost':
+  //           console.log('jump boost');
+  //           break;
+  //         default:
+  //           break;
   
-      }
+  //     }
+    
+  //   // player.decreaseFrogCount();
     return true;
   }
 }

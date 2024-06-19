@@ -1,3 +1,4 @@
+import { CANVAS_WIDTH, VELOCITY } from './../constants/constants';
 import { CANVAS_HEIGHT, FROG_FULLIMAGE_HEIGHT, FROG_FULLIMAGE_WIDTH } from '../constants/constants';
 import { Game } from './types';
 import { Platform } from './Platform';
@@ -24,6 +25,9 @@ export class Player {
   life: number;
 
   hasPower:string|null;
+  powerUpEndTime:number;
+  isShieldActive : boolean;
+  isMagnetActive :boolean;
 
   constructor(game: Game) {
     this.x = 0;
@@ -32,7 +36,7 @@ export class Player {
     this.speedY = 0;
     this.height = 64;
     this.width = 64;
-    this.targetX = 150; 
+    this.targetX = 200; 
     this.speedX = 2;
     this.isOnGround = true;
     this.spriteWidth = FROG_FULLIMAGE_WIDTH / 12;
@@ -49,11 +53,42 @@ export class Player {
     this.life = 1;
     // this.frogcount = 1;
     this.hasPower = null;
+    this.powerUpEndTime = 0;
+    this.isShieldActive = false;
+    this.isMagnetActive = false;
     document.addEventListener('keydown', (event: KeyboardEvent) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event: KeyboardEvent) => this.handleKeyUp(event));
   }
 
+  handlePowerUp(powerType:string) {
+    this.powerUpEndTime = Date.now() + 10000;
+  }
+
   update(platforms: Platform[]) {
+
+    if (this.hasPower == 'speed' && Date.now() < this.powerUpEndTime) {
+      VELOCITY.x = 7; 
+    }
+    else if (this.hasPower == 'jump boost' && Date.now() < this.powerUpEndTime){
+      this.jumpHeight = 30;
+    }
+    else if (this.hasPower == 'shield' && Date.now() < this.powerUpEndTime){
+      console.log('shield is on');
+      this.isShieldActive= true;
+    }
+    else if (this.hasPower == 'magnet' && Date.now() < this.powerUpEndTime){
+      console.log('magnet is on');
+      this.isMagnetActive = true;
+    }
+    else {
+      this.jumpHeight = 20;
+      this.isShieldActive = false;
+      this.jumpDuration = 3000;
+      VELOCITY.x = 5; 
+      this.hasPower = null; 
+      this.isMagnetActive = true;
+    }
+
     if (this.x < this.targetX) {
       this.x += this.speedX;
     }
@@ -119,6 +154,13 @@ export class Player {
         this.frameX = 0;
       }
     }
+    if (this.hasPower){
+      ctx.font = '20px Arial';
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.fillText(`Active Power-up: ${this.hasPower}`, CANVAS_WIDTH / 2, 30);
+    }
+   
   }
 
   jump() {
@@ -133,7 +175,7 @@ export class Player {
     console.log(`Frog count increased to ${this.life}`);
   }
   decreaseFrogCount(){
-    if (this.life >1){
+    if (this.life >1 && !this.isShieldActive){
       this.life -= 1;
     }
     

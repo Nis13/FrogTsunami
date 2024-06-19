@@ -39,7 +39,7 @@ export function generateObstacles() {
         obstacle = new Insect(obstacleX, obstacleY, BUTTERFLY_WIDTH, BUTTERFLY_HEIGHT);
       } else {
         obstacleType = "power";
-        const powerType = getRandom(1, 3);
+        const powerType = getRandom(1, 4);
         obstacle = new Power(obstacleX, obstacleY, BUTTERFLY_WIDTH, BUTTERFLY_HEIGHT, powerType);
       }
 
@@ -93,6 +93,7 @@ export function checkObstacleCollision(player: Player) {
           break;
         case "power":
           shouldRemove = obstacle.handleCollision(player);
+
           break;
         default:
           console.log("Unknown obstacle type:", obstacle.type);
