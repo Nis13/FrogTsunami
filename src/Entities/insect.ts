@@ -16,27 +16,35 @@ export class Insect extends Obstacle {
     img: HTMLImageElement;
     frameIndex: number;
     type: string;
+    frameThreshold:number;
+  frameCounter:number;
   
     constructor(x: number, y: number, width: number, height: number) {
       super(x, y, width, height, 'insect')
       this.img = new Image();
       this.img.src = "../../butterfly.png";
       this.frameIndex = 0;
+      this.frameThreshold = 5;
+      this.frameCounter = 0;
       this.type = 'insect';
     }
-  
     draw(ctx:CanvasRenderingContext2D) {
-        if (this.frameIndex >= butterflyCoordinates.length) {
-            this.frameIndex = 0;
-        }
-        const butterfly = butterflyCoordinates[this.frameIndex];
+      const butterfly = butterflyCoordinates[this.frameIndex];
+      ctx.drawImage(
+        this.img,
+        butterfly.x, butterfly.y, 240, 240,  
+        this.x, this.y, this.width, this.height 
+      );
     
-        ctx.drawImage(
-            this.img,
-            butterfly.x, butterfly.y, 240, 240,  
-            this.x, this.y, this.width, this.height 
-        );
+      this.frameCounter++;
+    
+      if (this.frameCounter >= this.frameThreshold) {
+        this.frameCounter = 0;
         this.frameIndex++;
+        if (this.frameIndex >=butterflyCoordinates.length) {
+          this.frameIndex = 0;
+        }
+      }
     }
     
   

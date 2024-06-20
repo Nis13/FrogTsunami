@@ -28,6 +28,7 @@ export class Player {
   powerUpEndTime:number;
   isShieldActive : boolean;
   isMagnetActive :boolean;
+  score:number;
 
   constructor(game: Game) {
     this.x = 0;
@@ -56,6 +57,7 @@ export class Player {
     this.powerUpEndTime = 0;
     this.isShieldActive = false;
     this.isMagnetActive = false;
+    this.score = 0;
     document.addEventListener('keydown', (event: KeyboardEvent) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event: KeyboardEvent) => this.handleKeyUp(event));
   }
@@ -67,7 +69,7 @@ export class Player {
   update(platforms: Platform[]) {
 
     if (this.hasPower == 'speed' && Date.now() < this.powerUpEndTime) {
-      VELOCITY.x = 7; 
+      VELOCITY.x = 8; 
     }
     else if (this.hasPower == 'jump boost' && Date.now() < this.powerUpEndTime){
       this.jumpHeight = 30;
@@ -84,9 +86,9 @@ export class Player {
       this.jumpHeight = 20;
       this.isShieldActive = false;
       this.jumpDuration = 3000;
-      VELOCITY.x = 5; 
+      VELOCITY.x = 6; 
       this.hasPower = null; 
-      this.isMagnetActive = true;
+      this.isMagnetActive = false;
     }
 
     if (this.x < this.targetX) {
@@ -108,8 +110,8 @@ export class Player {
        
         this.speedY = 10;
         if (this.y > CANVAS_HEIGHT-20) {
-          console.log('game over');
           this.speedY += this.game.gravity;
+          console.log('game over');
         }
         else{
           this.y = platform.y - this.height;
