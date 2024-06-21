@@ -1,4 +1,3 @@
-// import { platforms } from './../managers/platformManager';
 import { Player } from "./player";
 export abstract class Obstacle {
     x: number;
@@ -17,6 +16,5 @@ export abstract class Obstacle {
   
     abstract draw(ctx: CanvasRenderingContext2D): void;
     abstract update(): void;
-    abstract detectCollision(player: Player): boolean;
     abstract handleCollision(player:Player):boolean;
   }

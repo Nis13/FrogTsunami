@@ -1,4 +1,4 @@
-import { CANVAS_WIDTH, VELOCITY } from "../constants/constants";
+import { VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
 import { Player } from './player';
 
@@ -26,18 +26,7 @@ export class Car extends Obstacle {
     
   }
 
-  detectCollision(player: Player): boolean {
-    return (
-      this.x < player.x + player.width &&
-      this.x + this.width > player.x &&
-      this.y < player.y + player.height &&
-      this.y + this.height > player.y
-    );
-  }
-
   handleCollision(player:Player){
-    console.log('do this when collides with car');
-    player.decreaseFrogCount();
     return true;
   }
 }

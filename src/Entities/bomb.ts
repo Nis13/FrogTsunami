@@ -1,6 +1,6 @@
 import { VELOCITY } from "../constants/constants";
 import { Obstacle } from "./car";
-import { Player } from './player';
+import {  Player } from './player';
 
 export class Bomb extends Obstacle {
     img: HTMLImageElement;
@@ -19,18 +19,7 @@ export class Bomb extends Obstacle {
   update() {
     this.x -= VELOCITY.x;
   }
-
-  detectCollision(player: Player): boolean {
-    return (
-      this.x < player.x + player.width &&
-      this.x + this.width > player.x &&
-      this.y < player.y + player.height &&
-      this.y + this.height > player.y
-    );
-  }
   handleCollision(player:Player){
-    console.log('do this when collides with bomb');
-    player.decreaseFrogCount();
     return true;
   }
 }

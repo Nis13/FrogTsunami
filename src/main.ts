@@ -1,4 +1,3 @@
-import { Coin } from './Entities/coins';
 import { Game } from "./Entities/types";
 import { Player } from "./Entities/player";
 import { CANVAS_HEIGHT, CANVAS_WIDTH, VELOCITY } from "./constants/constants";
@@ -14,9 +13,9 @@ import {
   generateObstacles,
   updateObstacles,
   drawObstacles,
-  checkObstacleCollision,
+  obstacles,
 } from "./managers/obstaclesManager";
-import { checkCoinCollision, coins, drawCoins, generateCoins, updateCoins } from './managers/coinManager';
+import { checkCoinCollision, drawCoins, generateCoins, updateCoins } from './managers/coinManager';
 
 const game: Game = {
   gameFrame: 0,
@@ -30,16 +29,17 @@ const frogSprite = new Image();
 frogSprite.src = "./frog-sheet.png";
 
 const background = new Background(canvas, 0, 0, ctx);
-const player = new Player(game);
-
-// const coin = new Coin(ctx,200,300,200,200);
+const player = new Player(game,1);
 
 
 initialPlatform();
 
 
 function gameLoop() {
+  // if (game.gameFrame> )
+
   game.gameFrame++;
+  // console.log(game.gameFrame)
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   background.update();
@@ -57,7 +57,7 @@ function gameLoop() {
   generateObstacles();
   updateObstacles();
   drawObstacles(ctx);
-  checkObstacleCollision(player);
+  // checkObstacleCollision(player);
 
  generateCoins(ctx,3);
  updateCoins(player);
@@ -67,9 +67,10 @@ function gameLoop() {
 
   player.update(platforms);
   player.draw(ctx, frogSprite);
-  player.drawFrogs(ctx, frogSprite);
+  obstacles.forEach((obstacle)=>{
+    player.checkCollision(obstacle);
 
-
+  })
   requestAnimationFrame(gameLoop);
 }
 

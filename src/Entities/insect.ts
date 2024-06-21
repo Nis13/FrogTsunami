@@ -46,16 +46,6 @@ export class Insect extends Obstacle {
         }
       }
     }
-    
-  
-    detectCollision(player: Player): boolean {
-      return (
-        this.x < player.x + player.width &&
-        this.x + this.width > player.x &&
-        this.y < player.y + player.height &&
-        this.y + this.height > player.y
-      );
-    }
   
     update() {
         this.x -= VELOCITY.x;

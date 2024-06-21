@@ -64,48 +64,14 @@ export class Power extends Obstacle {
   }
 
   update() {
-    // Implement car update logic
     this.x -= VELOCITY.x;
-  }
-
-  detectCollision(player: Player): boolean {
-    return (
-      this.x < player.x + player.width &&
-      this.x + this.width > player.x &&
-      this.y < player.y + player.height &&
-      this.y + this.height > player.y
-    );
   }
   handleCollision(player:Player){
     console.log('do this when collides with powerup');
     if (!player.hasPower){
       player.hasPower = this.powerType;
-      player.handlePowerUp(this.powerType);
+      player.timeForPower();
     }
-   
-    
-  //     switch (player.hasPower){
-  //         case 'shield':
-  //           // this.powerUpEndTime = Date.now() + 1000;
-            
-  //           console.log('got shield');
-  //           // VELOCITY.x =10;
-  //           break;
-  //         case 'magnet':
-  //           console.log('got magnet');
-  //           break;
-  //         case 'speed':
-  //           console.log('got speed boost');
-  //           break;
-  //         case 'jump boost':
-  //           console.log('jump boost');
-  //           break;
-  //         default:
-  //           break;
-  
-  //     }
-    
-  //   // player.decreaseFrogCount();
     return true;
   }
 }

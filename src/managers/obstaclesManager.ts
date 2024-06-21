@@ -1,4 +1,3 @@
-import { Obstacle } from "../Entities/car";
 import { Player } from "../Entities/player";
 import { platforms } from "./platformManager"; 
 import { Car } from "../Entities/cars"; 
@@ -13,9 +12,9 @@ import {
 } from "../constants/constants"; 
 import { Insect } from "../Entities/insect";
 import { Power } from "../Entities/power";
-import { getRandom } from "../utilis/utilis";
+import { checkFrogCollsion, getRandom } from "../utilis/utilis";
 
-export const obstacles: Obstacle[] = [];
+export const obstacles: ( Car | Insect | Bomb | Power )[] = [];
 
 
 export function generateObstacles() {
@@ -73,35 +72,69 @@ export function drawObstacles(ctx: CanvasRenderingContext2D) {
   });
 }
 
+// export function checkObstacleCollision(player: Player) {
+//   for (let i = obstacles.length - 1; i >= 0; i--) {
+//     const obstacle = obstacles[i];
+//     if (obstacle.detectCollision(player)) {
+//       console.log("Collision detected with obstacle!");
+//       console.log(obstacle.type);
+
+//       let shouldRemove = false;
+//       switch (obstacle.type) {
+//         case "car":
+//           shouldRemove = obstacle.handleCollision(player);
+//           break;
+//         case "bomb":
+//           shouldRemove = obstacle.handleCollision(player);
+//           break;
+//         case "insect":
+//           shouldRemove = obstacle.handleCollision(player);
+//           break;
+//         case "power":
+//           shouldRemove = obstacle.handleCollision(player);
+
+//           break;
+//         default:
+//           console.log("Unknown obstacle type:", obstacle.type);
+//           break;
+//       }
+//       if (shouldRemove) {
+//         obstacles.splice(i, 1);
+//       }
+//     }
+//   }
+// }
+
 export function checkObstacleCollision(player: Player) {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const obstacle = obstacles[i];
-    if (obstacle.detectCollision(player)) {
-      console.log("Collision detected with obstacle!");
-      console.log(obstacle.type);
+    player.frogs.forEach((frog) => {
+      if (checkFrogCollsion(frog,obstacle)) {
+        console.log("Collision detected with obstacle!");
+        console.log(obstacle.type);
 
-      let shouldRemove = false;
-      switch (obstacle.type) {
-        case "car":
-          shouldRemove = obstacle.handleCollision(player);
-          break;
-        case "bomb":
-          shouldRemove = obstacle.handleCollision(player);
-          break;
-        case "insect":
-          shouldRemove = obstacle.handleCollision(player);
-          break;
-        case "power":
-          shouldRemove = obstacle.handleCollision(player);
-
-          break;
-        default:
-          console.log("Unknown obstacle type:", obstacle.type);
-          break;
+        let shouldRemove = false;
+        switch (obstacle.type) {
+          case "car":
+          case "bomb":
+            player.increaseFrogCount();
+            break;
+          case "insect":
+            shouldRemove = true;
+            player.increaseFrogCount();  
+            break;
+          case "power":
+            shouldRemove = obstacle.handleCollision(player);
+            break;
+          default:
+            console.log("Unknown obstacle type:", obstacle.type);
+            break;
+        }
+        if (shouldRemove) {
+          obstacles.splice(i, 1);
+        }
       }
-      if (shouldRemove) {
-        obstacles.splice(i, 1);
-      }
-    }
+    });
   }
 }
+

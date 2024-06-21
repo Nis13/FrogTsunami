@@ -1,5 +1,5 @@
 import { CANVAS_WIDTH, VELOCITY } from "../constants/constants";
-import { Player } from "./player";
+import { Frog, Player } from "./player";
 const coinPattern = [
       { x: 7, y:7 ,width:129, height:130},
       { x: 145, y: 4 ,width:140, height:133},
@@ -21,6 +21,7 @@ export class Coin {
   img:HTMLImageElement;
   frameThreshold:number;
   frameCounter:number;
+  type:string;
 
   constructor(ctx: CanvasRenderingContext2D, x: number, y: number, width:number, height:number) {
     this.x = x;
@@ -33,12 +34,13 @@ export class Coin {
         this.vy = 0;
 
         this.img = new Image();
-        // this.img.src = "../../singlecoin.png";
         this.img.src = "../../coin.png";
 
         this.frameIndex = 0;
         this.frameThreshold = 5;
         this.frameCounter = 0;
+
+        this.type = 'coin';
 
   }
 draw() {
@@ -63,25 +65,24 @@ draw() {
 
   update(player:Player) {
     const magnetStrength = 10;
-    if (player.isMagnetActive && this.x > 0 && this.x <CANVAS_WIDTH) {
-     
-        let directionX = player.x - this.x;
-        let directionY = player.y - this.y;
-        
-        let distance = Math.sqrt(directionX * directionX + directionY * directionY);
-        
+    if (player.isMagnetActive && this.x > 0 && this.x < CANVAS_WIDTH) {
+      let directionX = player.frogs[0].x - this.x; 
+      let directionY = player.frogs[0].y - this.y;
+      
+      let distance = Math.sqrt(directionX * directionX + directionY * directionY);
+      
+      if (distance > 0) { 
         let normalizedX = directionX / distance;
         let normalizedY = directionY / distance;
         
         this.x += normalizedX * magnetStrength;
         this.y += normalizedY * magnetStrength;
-      
-      
-  } else {
-    this.x -= VELOCITY.x;
-  }
+      }
+    } else {
+      this.x -= VELOCITY.x;
+    }
 }
-  detectCollision(player: Player): boolean {
+  detectCollision(player: Frog): boolean {
     return (
       this.x < player.x + player.width &&
       this.x + this.width > player.x &&
