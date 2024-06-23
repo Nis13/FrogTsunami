@@ -1,0 +1,1 @@
+*{margin:0;box-sizing:border-box}#start-button,#reset-button{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:2% 1%;background-color:#0c5631;border-radius:15%;color:#fff;font-size:3rem}#start-button:hover,#reset-button:hover{background-color:#c5e56d;color:#000}
