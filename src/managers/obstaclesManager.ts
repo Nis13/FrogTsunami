@@ -14,7 +14,7 @@ import { Insect } from "../Entities/insect";
 import { Power } from "../Entities/power";
 import { checkFrogCollsion, getRandom } from "../utilis/utilis";
 
-export const obstacles: ( Car | Insect | Bomb | Power )[] = [];
+export let obstacles: ( Car | Insect | Bomb | Power )[] = [];
 
 
 export function generateObstacles() {
@@ -136,5 +136,8 @@ export function checkObstacleCollision(player: Player) {
       }
     });
   }
+}
+export function resetObstacles(){
+  obstacles =[];
 }
 

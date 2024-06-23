@@ -1,6 +1,6 @@
 
-export const CANVAS_HEIGHT = innerHeight - 30;
-export const CANVAS_WIDTH = innerWidth - 30;
+export const CANVAS_HEIGHT = innerHeight -30;
+export const CANVAS_WIDTH = innerWidth -30;
 
 export const FROG_FULLIMAGE_WIDTH = 800;
 export const FROG_FULLIMAGE_HEIGHT =267;

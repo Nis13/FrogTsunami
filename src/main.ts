@@ -7,6 +7,7 @@ import {
   platforms,
   generatePlatform,
   removePlatform,
+  resetPlatform,
 } from "./managers/platformManager";
 import { Background } from "./Entities/background";
 import {
@@ -14,8 +15,10 @@ import {
   updateObstacles,
   drawObstacles,
   obstacles,
+  resetObstacles,
 } from "./managers/obstaclesManager";
-import { checkCoinCollision, drawCoins, generateCoins, updateCoins } from './managers/coinManager';
+import { checkCoinCollision, drawCoins, generateCoins, resetCoins, updateCoins } from './managers/coinManager';
+import { drawRestartPage, drawStartMenu } from "./menuDraw";
 
 const game: Game = {
   gameFrame: 0,
@@ -28,18 +31,25 @@ const { canvas, ctx } = setupCanvas("canvas1", CANVAS_WIDTH, CANVAS_HEIGHT);
 const frogSprite = new Image();
 frogSprite.src = "./frog-sheet.png";
 
-const background = new Background(canvas, 0, 0, ctx);
-const player = new Player(game,1);
+const img = new Image();
+  img.src = '../startimage.jpg';
 
+const background = new Background(canvas, 0, 0, ctx);
+let player = new Player(game, 1);
+let isGameOver = false;
 
 initialPlatform();
 
+const resetButton = document.querySelector<HTMLButtonElement>('#reset-button')!;
 
 function gameLoop() {
-  // if (game.gameFrame> )
+  if (isGameOver) {
+    drawRestartPage(ctx);
+    resetButton.style.display = 'block';
+    return;
+  }
 
   game.gameFrame++;
-  // console.log(game.gameFrame)
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   background.update();
@@ -57,23 +67,59 @@ function gameLoop() {
   generateObstacles();
   updateObstacles();
   drawObstacles(ctx);
-  // checkObstacleCollision(player);
 
- generateCoins(ctx,3);
- updateCoins(player);
- drawCoins();
- checkCoinCollision(player);
-
+  generateCoins(ctx, 3);
+  updateCoins(player);
+  drawCoins();
+  checkCoinCollision(player);
 
   player.update(platforms);
   player.draw(ctx, frogSprite);
-  obstacles.forEach((obstacle)=>{
+  obstacles.forEach((obstacle) => {
     player.checkCollision(obstacle);
+    if (!player.frogs.some(frog => frog.alive)) {
+      isGameOver = true;
+    }
+  });
 
-  })
   requestAnimationFrame(gameLoop);
 }
 
+function resetGame() {
+  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.fillStyle='blue';
+  ctx.rect(20,20,500,500);
+ 
+
+  isGameOver = false;
+
+  resetCoins();
+  resetPlatform();
+  resetObstacles();
+  player = new Player(game,1);
+
+  initialPlatform();
+}
+
+function restartGame() {
+  resetGame();
+  gameLoop();
+}
 
 
-gameLoop();
+function main(){
+    drawStartMenu(ctx);
+  const startButton = document.querySelector<HTMLButtonElement>('#start-button')!;
+  
+  startButton.addEventListener('click', () => {
+    startButton.style.display = 'none';
+    gameLoop();
+  });
+  resetButton.addEventListener('click', () => {
+    resetButton.style.display = 'none';
+    restartGame();
+  });
+  
+}
+
+main();

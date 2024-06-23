@@ -1,10 +1,19 @@
-/* #canvas1{
-  border: 5px solid black;
-  background-color: black;
+ *{
+  margin: 0;
+  box-sizing: border-box;
+ }
+
+#start-button , #reset-button{
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  width: 1300px;
-  height: 600px;
-} */
+  left: 35%;
+  padding: 2% 1%;
+  background-color: #0C5631;
+  border-radius: 15%;
+  color: white;
+  font-size: 3rem;
+}
+#start-button:hover , #reset-button:hover{
+  background-color: #c5e56d;
+  color: black;
+}

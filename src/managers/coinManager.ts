@@ -3,7 +3,7 @@ import { Coin } from "../Entities/coins";
 import { getRandom } from "../utilis/utilis";
 import { Player } from "../Entities/player";
 
-export const coins: Coin[] = [];
+export let coins: Coin[] = [];
 
 export function generateCoins(
   ctx: CanvasRenderingContext2D,
@@ -64,4 +64,7 @@ export function checkCoinCollision(player: Player) {
       }
     });
   }
+}
+export function resetCoins(){
+  coins = [];
 }

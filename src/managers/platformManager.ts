@@ -46,3 +46,7 @@ export const removePlatform = () => {
     platforms.shift();
   }
 };
+
+export function resetPlatform(){
+  platforms = [];
+}

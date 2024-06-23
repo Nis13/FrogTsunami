@@ -80,7 +80,7 @@ export class Player {
         console.log(this.frogs.length);
       }
     })
-    shiftFrogs(this.frogs);
+    if (this.frogs.length >0) shiftFrogs(this.frogs);
     this.handlePowerUps();
     
     this.frogs.forEach(frog => {
