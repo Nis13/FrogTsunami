@@ -42,6 +42,8 @@ initialPlatform();
 
 const resetButton = document.querySelector<HTMLButtonElement>('#reset-button')!;
 
+
+
 function gameLoop() {
   if (isGameOver) {
     drawRestartPage(ctx);
@@ -52,9 +54,11 @@ function gameLoop() {
   game.gameFrame++;
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
+
   background.update();
   background.draw();
-
+ 
+  drawScore();
   platforms.forEach((platform) => {
     platform.draw(ctx);
     platform.x -= VELOCITY.x;
@@ -123,3 +127,11 @@ function main(){
 }
 
 main();
+
+
+function drawScore(){
+  ctx.fillStyle = 'black';
+    ctx.font = 'bold 30px Arial' ;
+    ctx.fillText(`Score: ${player.score}`,100,80);
+    ctx.fillText(`Frog: ${player.frogs.length}`, 100,120);
+}

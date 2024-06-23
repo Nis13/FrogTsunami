@@ -8,6 +8,7 @@ import { Bomb } from './bomb';
 import { Power } from './power';
 import { obstacles } from '../managers/obstaclesManager';
 import { checkFrogCollsion, removeFromArray, shiftFrogs } from '../utilis/utilis';
+import { drawPower } from '../menuDraw';
 
 export interface Frog {
   x: number;
@@ -148,10 +149,7 @@ export class Player {
     });
 
     if (this.hasPower) {
-      ctx.font = '20px Arial';
-      ctx.fillStyle = 'white';
-      ctx.textAlign = 'center';
-      ctx.fillText(`Active Power-up: ${this.hasPower}`, CANVAS_WIDTH / 2, 30);
+      drawPower(ctx,this.hasPower);
     }
   }
 

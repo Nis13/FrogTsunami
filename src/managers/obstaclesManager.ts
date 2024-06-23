@@ -72,39 +72,6 @@ export function drawObstacles(ctx: CanvasRenderingContext2D) {
   });
 }
 
-// export function checkObstacleCollision(player: Player) {
-//   for (let i = obstacles.length - 1; i >= 0; i--) {
-//     const obstacle = obstacles[i];
-//     if (obstacle.detectCollision(player)) {
-//       console.log("Collision detected with obstacle!");
-//       console.log(obstacle.type);
-
-//       let shouldRemove = false;
-//       switch (obstacle.type) {
-//         case "car":
-//           shouldRemove = obstacle.handleCollision(player);
-//           break;
-//         case "bomb":
-//           shouldRemove = obstacle.handleCollision(player);
-//           break;
-//         case "insect":
-//           shouldRemove = obstacle.handleCollision(player);
-//           break;
-//         case "power":
-//           shouldRemove = obstacle.handleCollision(player);
-
-//           break;
-//         default:
-//           console.log("Unknown obstacle type:", obstacle.type);
-//           break;
-//       }
-//       if (shouldRemove) {
-//         obstacles.splice(i, 1);
-//       }
-//     }
-//   }
-// }
-
 export function checkObstacleCollision(player: Player) {
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const obstacle = obstacles[i];

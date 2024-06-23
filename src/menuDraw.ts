@@ -23,3 +23,17 @@ export function drawRestartPage(ctx:CanvasRenderingContext2D){
     };
     bgImage.src = "../end.jpg";
   }
+
+  export function drawPower(ctx:CanvasRenderingContext2D,power:string){
+    ctx.font = 'bold 40px Arial';
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+       ctx.fillText(`Active Power-up: ${power}`, CANVAS_WIDTH / 2, 30);
+  }
+
+  const imageSrcList = {
+    'shield': '../../shield.png',
+    'magnet':'../../magnet.png',
+    'jump boost':'../../shoes.png',
+    'speed':'../../speed/png'
+  }
