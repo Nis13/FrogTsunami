@@ -1,5 +1,5 @@
 import { VELOCITY } from "../constants/constants";
-import { Obstacle } from "./car";
+import { Obstacle } from "./obstacle";
 import { Player } from "./player";
 
 export const butterflyCoordinates = [
@@ -22,7 +22,7 @@ export class Insect extends Obstacle {
     constructor(x: number, y: number, width: number, height: number) {
       super(x, y, width, height, 'insect')
       this.img = new Image();
-      this.img.src = "../../butterfly.png";
+      this.img.src = "./butterfly.png";
       this.frameIndex = 0;
       this.frameThreshold = 5;
       this.frameCounter = 0;

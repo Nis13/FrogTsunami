@@ -3,10 +3,11 @@
   box-sizing: border-box;
  }
 
-#start-button , #reset-button{
+ #start-button, #reset-button {
   position: absolute;
   top: 50%;
-  left: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 2% 1%;
   background-color: #0C5631;
   border-radius: 15%;

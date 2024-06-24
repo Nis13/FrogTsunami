@@ -1,7 +1,5 @@
-// Entities/car.ts
-
 import { VELOCITY } from "../constants/constants";
-import { Obstacle } from "./car";
+import { Obstacle } from "./obstacle";
 import { Player } from './player';
 
 const powerTypeObj = ['shield','magnet','speed','jump boost'];
@@ -37,26 +35,25 @@ export class Power extends Obstacle {
   draw(ctx: CanvasRenderingContext2D) {
     if (this.powerTypeNum == 1){
       this.powerType = 'shield';
-      this.img.src = "../../shield.png";
+      this.img.src = "./shield.png";
     }
     else if (this.powerTypeNum == 2){
       this.powerType = 'magnet';
-      this.img.src = "../../magnet.png";
+      this.img.src = "./magnet.png";
     }
     else if (this.powerTypeNum == 3){
       this.powerType = 'speed';
-      this.img.src = "../../speed.png";
+      this.img.src = "./speed.png";
     }
     else if (this.powerTypeNum == 4){
       this.powerType = 'jump boost';
-      this.img.src = "../../shoes.png";
+      this.img.src = "./shoes.png";
     }
    
     this.img.onload = () => {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   };
   
-  // In case the image source is changed after onload event
   if (this.img.complete) {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }

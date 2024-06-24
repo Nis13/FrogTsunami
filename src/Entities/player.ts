@@ -1,4 +1,4 @@
-import { CANVAS_WIDTH, VELOCITY } from './../constants/constants';
+import {  VELOCITY } from './../constants/constants';
 import { CANVAS_HEIGHT, FROG_FULLIMAGE_HEIGHT, FROG_FULLIMAGE_WIDTH } from '../constants/constants';
 import { Game } from './types';
 import { Platform } from './Platform';
@@ -10,6 +10,9 @@ import { obstacles } from '../managers/obstaclesManager';
 import { checkFrogCollsion, removeFromArray, shiftFrogs } from '../utilis/utilis';
 import { drawPower } from '../menuDraw';
 
+const jumpSound = new Audio('./jump.wav');
+const bombSound = new Audio('./bomb.wav');
+
 export interface Frog {
   x: number;
   y: number;
@@ -18,7 +21,10 @@ export interface Frog {
   isOnGround: boolean;
   speedY: number;
   alive: boolean;
+  frameX: number;
+  frameY: number;
 }
+
 
 export class Player {
   frogs: Frog[];
@@ -65,11 +71,16 @@ export class Player {
         isOnGround: true,
         speedY: 0,
         alive: true,
+        frameX: 0,
+        frameY: 0,
       });
     }
 
     document.addEventListener('keydown', (event: KeyboardEvent) => this.handleKeyDown(event));
     document.addEventListener('keyup', (event: KeyboardEvent) => this.handleKeyUp(event));
+    document.addEventListener('touchstart', () => {
+      this.jump();
+    });
   }
   update(platforms: Platform[]) {
 
@@ -82,6 +93,7 @@ export class Player {
       }
     })
     if (this.frogs.length >0) shiftFrogs(this.frogs);
+    
     this.handlePowerUps();
     
     this.frogs.forEach(frog => {
@@ -121,15 +133,15 @@ export class Player {
     this.frogs.forEach(frog => {
       if (frog.alive) {
         if (frog.isOnGround) {
-          this.frameY = 0;
+          frog.frameY = 0;
         } else {
-          this.frameY = 1;
+          frog.frameY = 1;
         }
-
+  
         ctx.drawImage(
           frogSprite,
-          this.spriteWidth * this.frameX,
-          this.spriteHeight * this.frameY,
+          this.spriteWidth * frog.frameX,
+          this.spriteHeight * frog.frameY,
           this.spriteWidth,
           this.spriteHeight,
           frog.x,
@@ -137,27 +149,31 @@ export class Player {
           this.spriteWidth,
           this.spriteHeight
         );
-
+  
         if (this.game.gameFrame % this.spritePace === 0) {
-          if (this.frameX < 11) {
-            this.frameX++;
+          if (frog.frameX < 11) {
+            frog.frameX++;
           } else {
-            this.frameX = 0;
+            frog.frameX = 0;
           }
         }
       }
     });
-
+  
     if (this.hasPower) {
-      drawPower(ctx,this.hasPower);
+      drawPower(ctx, this.hasPower);
     }
   }
+  
 
   jump() {
     this.frogs.forEach(frog => {
       if (frog.isOnGround) {
         frog.speedY = -this.jumpHeight;
         frog.isOnGround = false;
+
+        jumpSound.currentTime = 0; 
+        jumpSound.play();
       }
     });
   }
@@ -165,24 +181,27 @@ export class Player {
   increaseFrogCount() {
     const lastFrog = this.frogs[this.frogs.length - 1];
     this.frogs.push({
-      x: lastFrog.x  - 50, 
+      x: lastFrog.x - 50,
       y: lastFrog.y,
       width: 64,
       height: 64,
       isOnGround: true,
       speedY: 0,
       alive: true,
+      frameX: 0,
+      frameY: 0,
     });
     console.log(`Frog count increased to ${this.frogs.length}`);
   }
+  
  
 
-  decreaseFrogCount() {
-    if (this.frogs.length > 1 && !this.isShieldActive) {
-      this.frogs.pop();
-    }
-    console.log(`Frog count decreased to ${this.frogs.length}`);
-  }
+  // decreaseFrogCount() {
+  //   if (this.frogs.length > 1 && !this.isShieldActive) {
+  //     this.frogs.pop();
+  //   }
+  //   console.log(`Frog count decreased to ${this.frogs.length}`);
+  // }
 
   handleKeyDown(event: KeyboardEvent) {
     if (event.code === 'Space' && !this.spacePressed) {
@@ -213,7 +232,14 @@ export class Player {
       if (frog.alive && checkFrogCollsion(frog, obstacle)) {
         const index = obstacles.indexOf(obstacle);
         if (index>-1) obstacles.splice(index,1);
-        if (obstacle.type == "car" || obstacle.type == "bomb")  if (!this.isShieldActive) frog.alive = false;
+        if (obstacle.type == "car" || obstacle.type == "bomb")  if (!this.isShieldActive) {
+          frog.alive = false;
+          removeFromArray(this.frogs,frog);
+        }
+        if (obstacle.type == "bomb"){
+          bombSound.currentTime = 0; 
+          bombSound.play();
+        }
         if (obstacle.type == "insect") this.increaseFrogCount();
         if (obstacle.type == "power") obstacle.handleCollision(this);
       }
@@ -240,6 +266,6 @@ export class Player {
     }
   }
   timeForPower() {
-    this.powerUpEndTime = Date.now() + 10000;
+    this.powerUpEndTime = Date.now() + 5000;
   }
 }

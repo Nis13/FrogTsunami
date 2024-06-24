@@ -22,7 +22,7 @@ export class Platform {
 
   draw(ctx: CanvasRenderingContext2D) {
     this.img = new Image();
-      this.img.src = "../../platform2.png"; 
+      this.img.src = "./platform2.png"; 
     ctx.drawImage(this.img, this.x, this.y - 20, this.width, this.height);
   }
 }

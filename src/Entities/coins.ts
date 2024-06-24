@@ -34,7 +34,7 @@ export class Coin {
         this.vy = 0;
 
         this.img = new Image();
-        this.img.src = "../../coin.png";
+        this.img.src = "./coin.png";
 
         this.frameIndex = 0;
         this.frameThreshold = 5;

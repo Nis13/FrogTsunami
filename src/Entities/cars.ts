@@ -1,5 +1,5 @@
 import { VELOCITY } from "../constants/constants";
-import { Obstacle } from "./car";
+import { Obstacle } from "./obstacle";
 import { Player } from './player';
 
 export class Car extends Obstacle {
@@ -8,7 +8,7 @@ export class Car extends Obstacle {
   constructor(x: number, y: number, width: number, height: number) {
     super(x, y, width, height,'car');
     this.img = new Image();
-    this.img.src = "../../car.png";
+    this.img.src = "./car.png";
     this.type = 'car';
   }
 
@@ -27,6 +27,7 @@ export class Car extends Obstacle {
   }
 
   handleCollision(player:Player){
+    console.log(player.hasPower);
     return true;
   }
 }

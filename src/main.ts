@@ -46,7 +46,7 @@ const resetButton = document.querySelector<HTMLButtonElement>('#reset-button')!;
 
 function gameLoop() {
   if (isGameOver) {
-    drawRestartPage(ctx);
+    drawRestartPage(ctx,player.score);
     resetButton.style.display = 'block';
     return;
   }
