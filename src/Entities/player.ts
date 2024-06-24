@@ -43,6 +43,7 @@ export class Player {
   isShieldActive: boolean;
   isMagnetActive: boolean;
   score: number;
+  jumpDelay: number;
 
   constructor(game: Game, frogCount: number) {
     this.game = game;
@@ -60,6 +61,7 @@ export class Player {
     this.isShieldActive = false;
     this.isMagnetActive = false;
     this.score = 0;
+    this.jumpDelay = 50;
 
     this.frogs = [];
     for (let i = 0; i < frogCount; i++) {
@@ -167,14 +169,16 @@ export class Player {
   
 
   jump() {
-    this.frogs.forEach(frog => {
-      if (frog.isOnGround) {
-        frog.speedY = -this.jumpHeight;
-        frog.isOnGround = false;
+    this.frogs.forEach((frog, index) => {
+      setTimeout(() => {
+        if (frog.isOnGround) {
+          frog.speedY = -this.jumpHeight;
+          frog.isOnGround = false;
 
-        jumpSound.currentTime = 0; 
-        jumpSound.play();
-      }
+          jumpSound.currentTime = 0;
+          jumpSound.play();
+        }
+      }, this.jumpDelay * index);
     });
   }
 

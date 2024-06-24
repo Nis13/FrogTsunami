@@ -55,7 +55,6 @@ export class Power extends Obstacle {
   if (this.img.complete) {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
-    // ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
   }
 
   update() {
