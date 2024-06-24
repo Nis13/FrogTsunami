@@ -48,16 +48,16 @@ export function drawPower(ctx: CanvasRenderingContext2D, power: string) {
   const powerImage = new Image();
   switch (power) {
     case "shield":
-      powerImage.src = "../../shield.png";
+      powerImage.src = "./shield.png";
       break;
     case "magnet":
-      powerImage.src = "../../magnet.png";
+      powerImage.src = "./magnet.png";
       break;
     case "jump boost":
-      powerImage.src = "../../shoes.png";
+      powerImage.src = "./shoes.png";
       break;
     case "speed":
-      powerImage.src = "../../speed.png";
+      powerImage.src = "./speed.png";
       break;
     default:
       break;
@@ -67,7 +67,7 @@ export function drawPower(ctx: CanvasRenderingContext2D, power: string) {
 
 export function drawScore(ctx: CanvasRenderingContext2D, player: Player) {
   const coin = new Image();
-  coin.src = "../singlecoin.png";
+  coin.src = "./singlecoin.png";
   ctx.drawImage(coin, 40, 60, 70, 60);
   // ctx.fillStyle = 'red';
   // ctx.fillRect(40,60,70,60);
@@ -76,7 +76,7 @@ export function drawScore(ctx: CanvasRenderingContext2D, player: Player) {
 
   ctx.fillText(`: ${player.score}`, 125, 102);
   const frogHead = new Image();
-  frogHead.src = "../froghead.png";
+  frogHead.src = "./froghead.png";
   ctx.drawImage(frogHead, 40, 130, 70, 60);
 
   ctx.fillText(`: ${player.frogs.length}`, 125, 165);

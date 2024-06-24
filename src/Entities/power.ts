@@ -19,8 +19,6 @@ export class Power extends Obstacle {
     this.type = 'power';
     this.powerType = powerTypeObj[powerTypeNum];
     this.powerUpEndTime = 0;
-    
-    // this.img.src = "../../magnet.png";
 
     
   }
