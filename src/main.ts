@@ -17,48 +17,53 @@ import {
   obstacles,
   resetObstacles,
 } from "./managers/obstaclesManager";
-import { checkCoinCollision, drawCoins, generateCoins, resetCoins, updateCoins } from './managers/coinManager';
-import { drawRestartPage, drawStartMenu } from "./menuDraw";
+import {
+  checkCoinCollision,
+  drawCoins,
+  generateCoins,
+  resetCoins,
+  updateCoins,
+} from "./managers/coinManager";
+import { drawRestartPage, drawScore, drawStartMenu } from "./menuDraw";
 
-const game: Game = {
+export const game: Game = {
   gameFrame: 0,
   gravity: 0.8,
   groundHeight: 80,
+  initialHighScore: 0,
+  highScore: 0,
 };
 
 const { canvas, ctx } = setupCanvas("canvas1", CANVAS_WIDTH, CANVAS_HEIGHT);
-
 const frogSprite = new Image();
 frogSprite.src = "./frog-sheet.png";
 
-const img = new Image();
-  img.src = '../startimage.jpg';
-
 const background = new Background(canvas, 0, 0, ctx);
 let player = new Player(game, 1);
-let isGameOver = false;
+export let isGameOver = false;
 
 initialPlatform();
 
-const resetButton = document.querySelector<HTMLButtonElement>('#reset-button')!;
-
-
+const resetButton = document.querySelector<HTMLButtonElement>("#reset-button")!;
 
 function gameLoop() {
   if (isGameOver) {
-    drawRestartPage(ctx,player.score);
-    resetButton.style.display = 'block';
+    if (player.score > game.highScore) {
+      game.highScore = player.score;
+      saveHighScore();
+    }
+    drawRestartPage(ctx, player.score, game.highScore);
+    resetButton.style.display = "block";
     return;
   }
 
   game.gameFrame++;
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-
   background.update();
   background.draw();
- 
-  drawScore();
+
+  drawScore(ctx, player);
   platforms.forEach((platform) => {
     platform.draw(ctx);
     platform.x -= VELOCITY.x;
@@ -81,7 +86,7 @@ function gameLoop() {
   player.draw(ctx, frogSprite);
   obstacles.forEach((obstacle) => {
     player.checkCollision(obstacle);
-    if (!player.frogs.some(frog => frog.alive)) {
+    if (!player.frogs.some((frog) => frog.alive)) {
       isGameOver = true;
     }
   });
@@ -91,16 +96,15 @@ function gameLoop() {
 
 function resetGame() {
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  ctx.fillStyle='blue';
-  ctx.rect(20,20,500,500);
- 
+  ctx.fillStyle = "blue";
+  ctx.rect(20, 20, 500, 500);
 
   isGameOver = false;
 
   resetCoins();
   resetPlatform();
   resetObstacles();
-  player = new Player(game,1);
+  player = new Player(game, 1);
 
   initialPlatform();
 }
@@ -109,39 +113,34 @@ function restartGame() {
   resetGame();
   gameLoop();
 }
+function loadHighScore() {
+  const storedHighScore = localStorage.getItem("highScore");
+  if (storedHighScore !== null) {
+    game.highScore = parseInt(storedHighScore, 10);
+  } else {
+    game.highScore = game.initialHighScore;
+  }
+}
 
+function saveHighScore() {
+  localStorage.setItem("highScore", game.highScore.toString());
+}
 
-function main(){
-    drawStartMenu(ctx);
-  const startButton = document.querySelector<HTMLButtonElement>('#start-button')!;
-  
-  startButton.addEventListener('click', () => {
-    startButton.style.display = 'none';
+function main() {
+  loadHighScore();
+  drawStartMenu(ctx);
+  const startButton =
+    document.querySelector<HTMLButtonElement>("#start-button")!;
+
+  startButton.addEventListener("click", () => {
+    startButton.style.display = "none";
     gameLoop();
   });
-  resetButton.addEventListener('click', () => {
-    resetButton.style.display = 'none';
+
+  resetButton.addEventListener("click", () => {
+    resetButton.style.display = "none";
     restartGame();
   });
-  
 }
 
 main();
-
-
-function drawScore(){
- const coin= new Image();
-  coin.src = "../singlecoin.png";
-  ctx.drawImage(coin, 40,60,70,60);
-  // ctx.fillStyle = 'red';
-  // ctx.fillRect(40,60,70,60);
-  ctx.fillStyle = 'black';
-    ctx.font = 'bold 30px Arial' ;
-
-    ctx.fillText(`: ${player.score}`,125,102);
-    const frogHead= new Image();
-    frogHead.src = "../froghead.png";
-    ctx.drawImage(frogHead, 40,130,70,60);
-
-    ctx.fillText(`: ${player.frogs.length}`, 125,165);
-}

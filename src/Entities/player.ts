@@ -193,15 +193,6 @@ export class Player {
     });
     console.log(`Frog count increased to ${this.frogs.length}`);
   }
-  
- 
-
-  // decreaseFrogCount() {
-  //   if (this.frogs.length > 1 && !this.isShieldActive) {
-  //     this.frogs.pop();
-  //   }
-  //   console.log(`Frog count decreased to ${this.frogs.length}`);
-  // }
 
   handleKeyDown(event: KeyboardEvent) {
     if (event.code === 'Space' && !this.spacePressed) {
@@ -234,7 +225,6 @@ export class Player {
         if (index>-1) obstacles.splice(index,1);
         if (obstacle.type == "car" || obstacle.type == "bomb")  if (!this.isShieldActive) {
           frog.alive = false;
-          // removeFromArray(this.frogs,frog);
         }
         if (obstacle.type == "bomb"){
           bombSound.currentTime = 0; 
