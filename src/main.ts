@@ -130,8 +130,18 @@ main();
 
 
 function drawScore(){
+ const coin= new Image();
+  coin.src = "../singlecoin.png";
+  ctx.drawImage(coin, 40,60,70,60);
+  // ctx.fillStyle = 'red';
+  // ctx.fillRect(40,60,70,60);
   ctx.fillStyle = 'black';
     ctx.font = 'bold 30px Arial' ;
-    ctx.fillText(`Score: ${player.score}`,100,80);
-    ctx.fillText(`Frog: ${player.frogs.length}`, 100,120);
+
+    ctx.fillText(`: ${player.score}`,125,102);
+    const frogHead= new Image();
+    frogHead.src = "../froghead.png";
+    ctx.drawImage(frogHead, 40,130,70,60);
+
+    ctx.fillText(`: ${player.frogs.length}`, 125,165);
 }

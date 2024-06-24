@@ -92,7 +92,7 @@ export class Player {
         console.log(this.frogs.length);
       }
     })
-    if (this.frogs.length >0) shiftFrogs(this.frogs);
+    if (this.frogs.length > 0) shiftFrogs(this.frogs);
     
     this.handlePowerUps();
     
@@ -234,7 +234,7 @@ export class Player {
         if (index>-1) obstacles.splice(index,1);
         if (obstacle.type == "car" || obstacle.type == "bomb")  if (!this.isShieldActive) {
           frog.alive = false;
-          removeFromArray(this.frogs,frog);
+          // removeFromArray(this.frogs,frog);
         }
         if (obstacle.type == "bomb"){
           bombSound.currentTime = 0; 
