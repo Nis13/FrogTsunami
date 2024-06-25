@@ -4,7 +4,7 @@ import { getRandom } from "../utilis/utilis";
 import { Player } from "../Entities/player";
 
 export let coins: Coin[] = [];
-
+const coinSound = new Audio("./coin.mp3");
 export function generateCoins(
   ctx: CanvasRenderingContext2D,
   coinsPerPlatform: number
@@ -57,10 +57,11 @@ export function checkCoinCollision(player: Player) {
     const coin = coins[i];
     player.frogs.forEach((frog) => {
       if (coin.detectCollision(frog)) {
-        console.log("Collision detected with coin!");
+        coinSound.currentTime = 0;
+      coinSound.play();
         player.score += 1;
         coins.splice(i, 1);
-        console.log(`score:${player.score}`);
+
       }
     });
   }

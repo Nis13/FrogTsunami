@@ -56,7 +56,7 @@ function gameLoop() {
     resetButton.style.display = "block";
     return;
   }
-
+  updateVelocityBasedOnScore(player.score);
   game.gameFrame++;
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -73,7 +73,7 @@ function gameLoop() {
   });
   removePlatform();
 
-  generateObstacles();
+  generateObstacles(player);
   updateObstacles();
   drawObstacles(ctx);
 
@@ -124,6 +124,13 @@ function loadHighScore() {
 
 function saveHighScore() {
   localStorage.setItem("highScore", game.highScore.toString());
+}
+function updateVelocityBasedOnScore(score: number): void {
+  if (score > 40) {
+      VELOCITY.x = 12; 
+  } else if (score > 20) {
+    VELOCITY.x = 8; 
+  } 
 }
 
 function main() {

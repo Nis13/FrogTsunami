@@ -61,7 +61,6 @@ export class Power extends Obstacle {
     this.x -= VELOCITY.x;
   }
   handleCollision(player:Player){
-    console.log('do this when collides with powerup');
     if (!player.hasPower){
       player.hasPower = this.powerType;
       player.timeForPower();

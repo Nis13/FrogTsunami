@@ -1,4 +1,3 @@
-import { Player } from "../Entities/player";
 import { platforms } from "./platformManager"; 
 import { Car } from "../Entities/cars"; 
 import { Bomb } from "../Entities/bomb"; 
@@ -12,12 +11,14 @@ import {
 } from "../constants/constants"; 
 import { Insect } from "../Entities/insect";
 import { Power } from "../Entities/power";
-import { checkFrogCollsion, getRandom } from "../utilis/utilis";
+import {getRandom } from "../utilis/utilis";
+import { PushCar } from "../Entities/pushCar";
+import { Player } from "../Entities/player";
 
-export let obstacles: ( Car | Insect | Bomb | Power )[] = [];
+export let obstacles: ( Car | Insect | Bomb | Power | PushCar)[] = [];
 
 
-export function generateObstacles() {
+export function generateObstacles(player:Player) {
   platforms.forEach((platform) => {
     if (!platform.hasObstacle && platform !== platforms[0]) {
       const obstacleX = platform.x + getRandom(platform.width / 6, 2 * platform.width / 3); 
@@ -25,28 +26,47 @@ export function generateObstacles() {
       
       let obstacle;
       let obstacleType;
-
+      
       const randomNum = Math.random();
-      if (randomNum < 0.2) {
+      // obstacleType ='pushCar';
+      // obstacle = new PushCar(obstacleX, platform.y-(CAR_HEIGHT), CAR_WIDTH*3, CAR_HEIGHT);
+      if (randomNum < 0.3) {
         obstacleType = "car";
         obstacle = new Car(obstacleX, platform.y - CAR_HEIGHT, CAR_WIDTH, CAR_HEIGHT);
-      } else if (randomNum < 0.5) {
+      } else if (randomNum < 0.7) {
         obstacleType = "bomb";
         obstacle = new Bomb(obstacleX, obstacleY, BOMB_WIDTH, BOMB_HEIGHT);
-      } else if (randomNum < 0.8) {
+      } else if (randomNum < 0.9) {
         obstacleType = 'insect';
         obstacle = new Insect(obstacleX, obstacleY, BUTTERFLY_WIDTH, BUTTERFLY_HEIGHT);
-      } else {
+      }
+      else if (randomNum <1){
+        const secondRandom = Math.random();
+        if (secondRandom<0.5){
+        obstacleType ='pushCar';
+        obstacle = new PushCar(obstacleX, platform.y-(CAR_HEIGHT)-10, CAR_WIDTH, CAR_HEIGHT);
+      }
+      else {
+        if (!player.hasPower){
         obstacleType = "power";
         const powerType = getRandom(1, 4);
         obstacle = new Power(obstacleX, obstacleY, BUTTERFLY_WIDTH, BUTTERFLY_HEIGHT, powerType);
+        }
+        else{
+          obstacleType = "car";
+          obstacle = new Car(obstacleX, platform.y - CAR_HEIGHT, CAR_WIDTH, CAR_HEIGHT);
+        }
       }
+      } else{
+        obstacleType = "car";
+        obstacle = new Car(obstacleX, platform.y - CAR_HEIGHT, CAR_WIDTH, CAR_HEIGHT);
+      }
+
+      
 
       obstacle.type = obstacleType;
       obstacles.push(obstacle);
       platform.hasObstacle = true;
-
-      console.log(`Added ${obstacle} obstacle at (${obstacleX}, ${obstacleY})`);
     }
   });
 }
@@ -70,39 +90,6 @@ export function drawObstacles(ctx: CanvasRenderingContext2D) {
   obstacles.forEach((obstacle) => {
     obstacle.draw(ctx);
   });
-}
-
-export function checkObstacleCollision(player: Player) {
-  for (let i = obstacles.length - 1; i >= 0; i--) {
-    const obstacle = obstacles[i];
-    player.frogs.forEach((frog) => {
-      if (checkFrogCollsion(frog,obstacle)) {
-        console.log("Collision detected with obstacle!");
-        console.log(obstacle.type);
-
-        let shouldRemove = false;
-        switch (obstacle.type) {
-          case "car":
-          case "bomb":
-            player.increaseFrogCount();
-            break;
-          case "insect":
-            shouldRemove = true;
-            player.increaseFrogCount();  
-            break;
-          case "power":
-            shouldRemove = obstacle.handleCollision(player);
-            break;
-          default:
-            console.log("Unknown obstacle type:", obstacle.type);
-            break;
-        }
-        if (shouldRemove) {
-          obstacles.splice(i, 1);
-        }
-      }
-    });
-  }
 }
 export function resetObstacles(){
   obstacles =[];

@@ -53,7 +53,6 @@ export class Insect extends Obstacle {
         
     }
     handleCollision(player: Player){
-        console.log('handle collsion with insect');
         player.increaseFrogCount();
         return true;
         

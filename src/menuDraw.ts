@@ -33,8 +33,8 @@ export function drawRestartPage(
     ctx.font = "bold 40px Arial";
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
-    ctx.fillText(`Score: ${score}`, CANVAS_WIDTH / 2, 30);
-    ctx.fillText(`High Score: ${highScore}`, CANVAS_WIDTH / 2, 100);
+    ctx.fillText(`Score: ${score}`, CANVAS_WIDTH / 2, 50);
+    ctx.fillText(`High Score: ${highScore}`, CANVAS_WIDTH / 2, 120);
   };
   bgImage.src = "./end.jpg";
 }
@@ -62,15 +62,13 @@ export function drawPower(ctx: CanvasRenderingContext2D, power: string) {
     default:
       break;
   }
-  ctx.drawImage(powerImage, CANVAS_WIDTH / 2 - 50, 100, 70, 70);
+  ctx.drawImage(powerImage, CANVAS_WIDTH / 2 - 50, 100, 90, 70);
 }
 
 export function drawScore(ctx: CanvasRenderingContext2D, player: Player) {
   const coin = new Image();
   coin.src = "./singlecoin.png";
   ctx.drawImage(coin, 40, 60, 70, 60);
-  // ctx.fillStyle = 'red';
-  // ctx.fillRect(40,60,70,60);
   ctx.fillStyle = "black";
   ctx.font = "bold 30px Arial";
 
