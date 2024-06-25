@@ -125,12 +125,13 @@ function loadHighScore() {
 function saveHighScore() {
   localStorage.setItem("highScore", game.highScore.toString());
 }
+
 function updateVelocityBasedOnScore(score: number): void {
   if (score > 40) {
-      VELOCITY.x = 12; 
+    VELOCITY.x = 12;
   } else if (score > 20) {
-    VELOCITY.x = 8; 
-  } 
+    VELOCITY.x = 8;
+  }
 }
 
 function main() {

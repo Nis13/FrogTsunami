@@ -28,6 +28,7 @@ export function generateObstacles(player: Player) {
       let obstacleType;
 
       const randomNum = Math.random();
+      //generate obstacles based on probability
       if (randomNum < 0.3) {
         obstacleType = "car";
         obstacle = new Car(

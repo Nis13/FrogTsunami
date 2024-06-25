@@ -24,6 +24,7 @@ const bombSound = new Audio("./bomb.wav");
 const insectSound = new Audio("./insect.mp3");
 const carSound = new Audio("./car.mp3");
 
+//to produce multiple no of frogs
 export interface Frog {
   x: number;
   y: number;
@@ -37,17 +38,19 @@ export interface Frog {
 }
 
 export class Player {
-  frogs: Frog[];
+  frogs: Frog[]; //stores multiple no of frogs
   game: Game;
   spriteWidth: number;
   spriteHeight: number;
   frameX: number;
   frameY: number;
+
   spritePace: number;
   jumpHeight: number;
   jumpDuration: number;
   spacePressed: boolean;
   spaceReleasedTimeout: number | null;
+
   hasPower: string | null;
   powerUpEndTime: number;
   isShieldActive: boolean;
@@ -98,6 +101,7 @@ export class Player {
       this.jump();
     });
   }
+
   update(platforms: Platform[]) {
     if (this.frogs.length === 0) return;
     this.frogs.forEach((frog) => {
@@ -176,11 +180,11 @@ export class Player {
   }
 
   jump() {
-    if(this.frogs.length > 0)
-    if (this.frogs[0].isOnGround ) {
-      jumpSound.currentTime = 0;
-      jumpSound.play();
-    }
+    if (this.frogs.length > 0)
+      if (this.frogs[0].isOnGround) {
+        jumpSound.currentTime = 0;
+        jumpSound.play();
+      }
     this.frogs.forEach((frog, index) => {
       setTimeout(() => {
         if (frog.isOnGround) {
@@ -233,7 +237,6 @@ export class Player {
   checkCollision(obstacle: Car | Insect | Bomb | Power | PushCar): void {
     this.frogs.forEach((frog) => {
       if (frog.alive && checkFrogCollsion(frog, obstacle)) {
-        
         if (obstacle instanceof PushCar) {
           obstacle.checkVerticalCollisions(this.frogs);
           obstacle.checkHorizontalCollisions(this.frogs, this);
@@ -248,8 +251,7 @@ export class Player {
             if (obstacle.type == "bomb") {
               bombSound.currentTime = 0;
               bombSound.play();
-            }
-            else{
+            } else {
               carSound.currentTime = 0;
               carSound.play();
             }
@@ -257,13 +259,15 @@ export class Player {
         if (obstacle.type == "insect") {
           insectSound.currentTime = 0;
           insectSound.play();
-          this.increaseFrogCount();}
+          this.increaseFrogCount();
+        }
         if (obstacle.type == "power") {
-          obstacle.handleCollision(this)
-        };
+          obstacle.handleCollision(this);
+        }
       }
     });
   }
+  
   handlePowerUps() {
     if (this.hasPower === "speed" && Date.now() < this.powerUpEndTime) {
       VELOCITY.x = 8;

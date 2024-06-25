@@ -1,8 +1,9 @@
- *{
+* {
   margin: 0;
   box-sizing: border-box;
- }
- body, html {
+}
+body,
+html {
   height: 100%;
   margin: 0;
   display: flex;
@@ -10,18 +11,20 @@
   align-items: center;
 }
 
- #start-button, #reset-button {
+#start-button,
+#reset-button {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 2% 1%;
-  background-color: #0C5631;
+  background-color: #0c5631;
   border-radius: 15%;
   color: white;
   font-size: 3rem;
 }
-#start-button:hover , #reset-button:hover{
+#start-button:hover,
+#reset-button:hover {
   background-color: #0e1203;
   color: rgb(255, 255, 255);
   cursor: pointer;
