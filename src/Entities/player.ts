@@ -23,7 +23,6 @@ const jumpSound = new Audio("./frogjump.mp3");
 const bombSound = new Audio("./bomb.wav");
 const insectSound = new Audio("./insect.mp3");
 const carSound = new Audio("./car.mp3");
-const powerSound = new Audio("./power.mp3");
 
 export interface Frog {
   x: number;
@@ -260,13 +259,10 @@ export class Player {
           insectSound.play();
           this.increaseFrogCount();}
         if (obstacle.type == "power") {
-          powerSound.currentTime = 0;
-      powerSound.play();
           obstacle.handleCollision(this)
         };
       }
     });
-    if (this.frogs.length == 0) powerSound.pause();
   }
   handlePowerUps() {
     if (this.hasPower === "speed" && Date.now() < this.powerUpEndTime) {

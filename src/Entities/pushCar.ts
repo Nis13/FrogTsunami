@@ -16,7 +16,7 @@ export class PushCar extends Obstacle {
         this.img = new Image();
         this.img.src = "./frogCage.png";
         this.type = 'pushCar';
-        this.pushThreshold = 4;
+        this.pushThreshold = 1;
         this.isPushed = false;
         this.tagImg = new Image();
         this.tagImg.src = "./cartag.png";

@@ -28,13 +28,6 @@ export function generateObstacles(player: Player) {
       let obstacleType;
 
       const randomNum = Math.random();
-      obstacleType = "pushCar";
-      obstacle = new PushCar(
-        obstacleX,
-        platform.y - CAR_HEIGHT,
-        CAR_WIDTH * 3,
-        CAR_HEIGHT
-      );
       if (randomNum < 0.3) {
         obstacleType = "car";
         obstacle = new Car(
