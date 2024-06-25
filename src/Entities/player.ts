@@ -21,6 +21,9 @@ import { PushCar } from "./pushCar";
 
 const jumpSound = new Audio("./frogjump.mp3");
 const bombSound = new Audio("./bomb.wav");
+const insectSound = new Audio("./insect.mp3");
+const carSound = new Audio("./car.mp3");
+const powerSound = new Audio("./power.mp3");
 
 export interface Frog {
   x: number;
@@ -174,7 +177,8 @@ export class Player {
   }
 
   jump() {
-    if (this.frogs[0].isOnGround && this.frogs.length > 0) {
+    if(this.frogs.length > 0)
+    if (this.frogs[0].isOnGround ) {
       jumpSound.currentTime = 0;
       jumpSound.play();
     }
@@ -230,6 +234,7 @@ export class Player {
   checkCollision(obstacle: Car | Insect | Bomb | Power | PushCar): void {
     this.frogs.forEach((frog) => {
       if (frog.alive && checkFrogCollsion(frog, obstacle)) {
+        
         if (obstacle instanceof PushCar) {
           obstacle.checkVerticalCollisions(this.frogs);
           obstacle.checkHorizontalCollisions(this.frogs, this);
@@ -241,15 +246,27 @@ export class Player {
         if (obstacle.type == "car" || obstacle.type == "bomb")
           if (!this.isShieldActive) {
             frog.alive = false;
+            if (obstacle.type == "bomb") {
+              bombSound.currentTime = 0;
+              bombSound.play();
+            }
+            else{
+              carSound.currentTime = 0;
+              carSound.play();
+            }
           }
-        if (obstacle.type == "bomb") {
-          bombSound.currentTime = 0;
-          bombSound.play();
-        }
-        if (obstacle.type == "insect") this.increaseFrogCount();
-        if (obstacle.type == "power") obstacle.handleCollision(this);
+        if (obstacle.type == "insect") {
+          insectSound.currentTime = 0;
+          insectSound.play();
+          this.increaseFrogCount();}
+        if (obstacle.type == "power") {
+          powerSound.currentTime = 0;
+      powerSound.play();
+          obstacle.handleCollision(this)
+        };
       }
     });
+    if (this.frogs.length == 0) powerSound.pause();
   }
   handlePowerUps() {
     if (this.hasPower === "speed" && Date.now() < this.powerUpEndTime) {
@@ -273,6 +290,6 @@ export class Player {
     }
   }
   timeForPower() {
-    this.powerUpEndTime = Date.now() + 5000;
+    this.powerUpEndTime = Date.now() + 7000;
   }
 }

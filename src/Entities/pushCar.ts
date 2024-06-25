@@ -9,22 +9,22 @@ export class PushCar extends Obstacle {
     type: string;
     pushThreshold: number;
     isPushed: boolean;
-    pushTimeout: number | null = null;
+    tagImg:HTMLImageElement;
 
     constructor(x: number, y: number, width: number, height: number) {
         super(x, y, width, height, 'pushcar');
         this.img = new Image();
         this.img.src = "./frogCage.png";
         this.type = 'pushCar';
-        this.pushThreshold = 2;
+        this.pushThreshold = 4;
         this.isPushed = false;
-        this.pushTimeout = null;
+        this.tagImg = new Image();
+        this.tagImg.src = "./cartag.png";
     }
 
     draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        // ctx.fillStyle = 'red';
-        // ctx.fillRect(this.x, this.y, this.width, this.height)
+        ctx.drawImage(this.tagImg, this.x -50, this.y-50, this.width, this.height);
     }
 
     update() {

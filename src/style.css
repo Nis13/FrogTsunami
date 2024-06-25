@@ -2,6 +2,13 @@
   margin: 0;
   box-sizing: border-box;
  }
+ body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
  #start-button, #reset-button {
   position: absolute;
@@ -15,6 +22,7 @@
   font-size: 3rem;
 }
 #start-button:hover , #reset-button:hover{
-  background-color: #c5e56d;
-  color: black;
+  background-color: #0e1203;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
 }
